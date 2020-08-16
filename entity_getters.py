@@ -1,4 +1,5 @@
 from entity_classes import *
+import json
 
 all_disciplines1 = [
     "Центровка и контроль загрузки",
@@ -21,6 +22,18 @@ all_disciplines = [
     "Орга",
     "Орга"
 ]
+
+def read_teachers_json():
+    f = open("./data/teachers.json", "r")
+    result = json.load(f)
+    f.close()
+    return result
+
+def read_programs_json():
+    f = open("./data/parsed_programs.json", "r")
+    result = json.load(f)
+    f.close()
+    return result
 
 def get_teachers(): 
     return [
@@ -67,12 +80,12 @@ def get_tasks():
     return [
         Task(0, all_disciplines[0], "Base", False),
         Task(1, all_disciplines[0], "Simple", False, 0),
-        Task(2, all_disciplines[0], "Simple", False),
-        Task(3, all_disciplines[0], "Simple", True),
+        Task(2, all_disciplines[0], "Simple", False, 1),
+        Task(3, all_disciplines[0], "Simple", True, 2),
         Task(4, all_disciplines[1], "Base", False),
         Task(5, all_disciplines[1], "Simple", False, 4),
-        Task(6, all_disciplines[1], "Simple", False),
-        Task(7, all_disciplines[1], "Simple", True),
+        Task(6, all_disciplines[1], "Simple", False, 5),
+        Task(7, all_disciplines[1], "Simple", True, 6),
     ]
 def get_audiences():
     return [
@@ -110,5 +123,34 @@ def get_times():
             start=datetime(2020, 9, 1, 12, 0, 0),
             end=datetime(2020, 9, 1, 13, 30, 0)
         ),
-        
+        Time(
+            id=3,
+            start=datetime(2020, 9, 2, 8, 0, 0),
+            end=datetime(2020, 9, 2, 9, 30, 0)
+        ),
+        Time(
+            id=4,
+            start=datetime(2020, 9, 2, 10, 0, 0),
+            end=datetime(2020, 9, 2, 11, 30, 0)
+        ),
+        Time(
+            id=5,
+            start=datetime(2020, 9, 2, 12, 0, 0),
+            end=datetime(2020, 9, 2, 13, 30, 0)
+        ),
+        # Time(
+        #     id=6,
+        #     start=datetime(2020, 9, 3, 8, 0, 0),
+        #     end=datetime(2020, 9, 3, 9, 30, 0)
+        # ),
+        # Time(
+        #     id=7,
+        #     start=datetime(2020, 9, 3, 10, 0, 0),
+        #     end=datetime(2020, 9, 3, 11, 30, 0)
+        # ),
+        # Time(
+        #     id=8,
+        #     start=datetime(2020, 9, 3, 12, 0, 0),
+        #     end=datetime(2020, 9, 3, 13, 30, 0)
+        # ),
     ]

@@ -95,12 +95,28 @@ def main():
                     if teacher.check_task(task_id) == None:
                         model.Add(schedule[time_id, audience_id, task_id, teacher_id] == 0) # Учитель ведёт только свой урок
     
-    for time_id, time in enumerate(Times):
-        for audience_id, audience in enumerate(Audiences):
-            for teacher_id, teacher in enumerate(Teachers):
+    
+    for audience_id, audience in enumerate(Audiences):
+        for teacher_id, teacher in enumerate(Teachers):
+            for task_id, task in enumerate(Tasks):
+                previous_task = Tasks[task_id].prev_id
+                if previous_task == None:
+                    continue
+                left_main = []
+                left_previous = [] 
+                for time_id, time in enumerate(Times):
+                    left_main.append(schedule[time_id, audience_id, task_id, teacher_id])
+                    left_previous.append(schedule[time_id, audience_id, previous_task, teacher_id])
+                    model.Add(sum(left_previous) >= sum(left_main))
+                    
+    teacher_worked_all = []
+    for teacher_id, teacher in enumerate(Teachers):
+        teacher_worked = []
+        for time_id, time in enumerate(Times):
+            for audience_id, audience in enumerate(Audiences):
                 for task_id, task in enumerate(Tasks):
-                    if Tasks[task_id] 
-                
+                    teacher_worked.append(schedule[time_id, audience_id, task_id, teacher_id])
+        teacher_worked_all.append(teacher_worked)
 
     priorities = []
     for time_id, time in enumerate(Times):
