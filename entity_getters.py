@@ -49,35 +49,35 @@ def split_task(progs, task):
     return [int(task)*100000+i for i in range(int(time/2+time%2))]
 
 def get_teachers():
-    """
+    
     return [
         Teacher(
             id=0,
-            allowed_tasks=[ (0, 6), (4, 6), (1, 4), (5, 5) ],
+            allowed_tasks=[ (0, 5), (4, 5), (1, 5), (5, 5) ],
             allowed_times=[ 1, 2, 3, 4 ],
-            name="Pasha(only 0 and 1 lessons)"
+            name="Pasha(only first 2 lessons)"
         ),
         Teacher(
             id=1,
-            allowed_tasks=[ (0, 1), (1, 5), (2, 3), (3, 4) ],
+            allowed_tasks=[ (0, 4), (1, 3), (2, 2), (3, 1) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
             name="Masha(1st-discipline, all)"
         ),
         Teacher(
             id=2,
-            allowed_tasks=[ (1, 4), (2, 4), (3, 5) ],
+            allowed_tasks=[ (1, 5), (2, 5), (3, 5) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
             name="Vitya(1st-discipline, no base)"
         ),
         Teacher(
             id=3,
-            allowed_tasks=[ (4, 8), (5, 5), (6, 3), (7, 4) ],
+            allowed_tasks=[ (4, 4), (5, 3), (6, 2), (7, 1) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
             name="Olga(2nd-discipline, all)"
         ),
         Teacher(
             id=4,
-            allowed_tasks=[ (5, 4), (6, 4), (7, 5) ],
+            allowed_tasks=[ (5, 5), (6, 5), (7, 5) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
             name="Kolya(2nd-discipline, no base)"
         ),
@@ -108,8 +108,10 @@ def get_teachers():
         l.append(teacher)
 
     return l
+    """
 
 def get_tasks():
+    """
     progs = read_programs_json()
     res = []
     for k, v in progs.items():
@@ -129,16 +131,17 @@ def get_tasks():
     return [
         Task(0, all_disciplines[0], "Base", False),
         Task(1, all_disciplines[0], "Simple", False, 0),
-        Task(2, all_disciplines[0], "Simple", False, 1),
-        Task(3, all_disciplines[0], "Simple", True, 2),
+        Task(2, all_disciplines[0], "Simple", False, 0),
+        Task(3, all_disciplines[0], "Simple", True, 0),
         Task(4, all_disciplines[1], "Base", False),
         Task(5, all_disciplines[1], "Simple", False, 4),
-        Task(6, all_disciplines[1], "Simple", False, 5),
-        Task(7, all_disciplines[1], "Simple", True, 6),
+        Task(6, all_disciplines[1], "Simple", False, 4),
+        Task(7, all_disciplines[1], "Simple", True, 4),
     ]
-    """
+    
 
 def get_audiences():
+    """
     res = []
     auds_raw = read_audiences_json()
     progs = read_programs_json()
@@ -180,7 +183,7 @@ def get_audiences():
             tasks_allowed=[ (3, 2), (7, 2) ]
         ),
     ]
-    """
+    
 
 def get_times():
     return [

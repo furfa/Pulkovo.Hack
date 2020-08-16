@@ -13,6 +13,24 @@ from schedule_class import Schedule
 import config
 
 
+"""
+Пример:
+Учителя:
+    Pasha(only 0 and 1 lessons) - Ведёт только Базовый курс и первое занятие после Базового.
+    Masha(1st-discipline, all) - Может вести все занятия первой дисциплины. 
+    Vitya(1st-discipline, no base) - Может вести все занятия первой дисциплины, кроме Базового курса
+    Olga(2nd-discipline, all) - Может вести все занятия второй дисциплины
+    Kolya(2nd-discipline, no base) - Может вести все занятия первой дисциплины, кроме Базового курса
+    Practical_Mega_Boss(only practice) - Может вести только практические занятия (самый высокий приоритет для них)
+
+Занятия:
+    Дисциплина 1: 0, 1, 2, 3,
+    0 - Базовый
+
+    Дисциплина 2: 4, 5, 6, 7
+    4 - Базовый
+"""
+
 def main():
     
     Tasks = get_tasks()         # :list()
