@@ -15,6 +15,7 @@ parsed_courses = [i for i in fo.keys()]
 
 for pj in parsed_courses:
     if "DI-L10" in pj:
+        del fo[pj]
         continue
     similar_points = 1000000
     most_similar = ""
