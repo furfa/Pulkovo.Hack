@@ -121,7 +121,7 @@ def get_tasks():
                     progs[str(t//100000)]["discipline"],
                     progs[str(t//100000)]["name"],
                     False,
-                    (t-1 if t%100 != 0 else None)
+                    (t-1 if t%100000 != 0 else None)
                 )
             )
     return res

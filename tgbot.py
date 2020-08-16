@@ -6,6 +6,9 @@ import json
 import os
 import pandas as pd
 from datetime import datetime
+import schedule
+import time
+from multiprocessing import Process
 
 bot = telebot.TeleBot(config.TOKEN)
 
@@ -119,4 +122,25 @@ def echo(message):
     print(message.text)
     bot.send_message(message.chat.id,"Такой команды нет (")
 
-bot.polling(none_stop=True)
+# это функция отправки сообщений по таймеру
+def check_send_messages():
+    while True:
+        # ваш код проверки времени и отправки сообщений по таймеру
+        # пауза между проверками, чтобы не загружать процессор
+        for k, v in users.items():
+            bot.send_message(k, check_next_pair(v))
+        time.sleep(60)
+  
+# а теперь запускаем проверку в отдельном потоке
+p1 = Process(target=check_send_messages, args=())
+p1.start()
+
+
+if __name__ == "__main__":
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except Exception as e:
+            print(e)
+            # повторяем через 15 секунд в случае недоступности сервера Telegram
+            time.sleep(15)
