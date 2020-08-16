@@ -35,8 +35,21 @@ def read_programs_json():
     f.close()
     return result
 
+def read_audiences_json():
+    f = open("./data/audiences.json", "r")
+    result = json.load(f)
+    f.close()
+    return result
+
+def split_task(progs, task):
+    try:
+        time = progs[task]["time"]
+    except KeyError:
+        return []
+    return [int(task)*100000+i for i in range(int(time/2+time%2))]
+
 def get_teachers():
-    
+    """
     return [
         Teacher(
             id=0,
@@ -75,9 +88,44 @@ def get_teachers():
             name="Practical_Mega_Boss(only practice)"
         )
     ]
+    """
 
+    
+    teachers_raw = read_teachers_json()
+    progs = read_programs_json()
+    l = []
+    for k, v in teachers_raw.items():
+        al = []
+        for p in v["priority"]["lessons"]:
+            al.extend([(t, p[1]) for t in split_task(progs, str(p[0]))[:5]])
+        teacher = Teacher(
+            id = k,
+            allowed_tasks = al,
+            allowed_times = v["weekends"],
+            name = v["name"]
+        )
+        
+        l.append(teacher)
+
+    return l
 
 def get_tasks():
+    progs = read_programs_json()
+    res = []
+    for k, v in progs.items():
+        st = split_task(progs, k)[:5]
+        for i, t in enumerate(st):
+            res.append(
+                Task(
+                    t,
+                    progs[str(t//100000)]["discipline"],
+                    progs[str(t//100000)]["name"],
+                    False,
+                    (t-1 if t%100 != 0 else None)
+                )
+            )
+    return res
+    """
     return [
         Task(0, all_disciplines[0], "Base", False),
         Task(1, all_disciplines[0], "Simple", False, 0),
@@ -88,7 +136,26 @@ def get_tasks():
         Task(6, all_disciplines[1], "Simple", False, 5),
         Task(7, all_disciplines[1], "Simple", True, 6),
     ]
+    """
+
 def get_audiences():
+    res = []
+    auds_raw = read_audiences_json()
+    progs = read_programs_json()
+    for k, v in auds_raw.items():
+        ta = []
+        for t in v["allowed"]:
+            if t in v["advantages"]:
+                ta.extend(([(q, 2) for q in split_task(progs, t)]))
+            else:
+                ta.extend(([(q, 1) for q in split_task(progs, t)]))
+        
+        a = Audience(
+            id=k,
+            tasks_allowed=ta
+        )
+    return res
+    """ 
     return [
         #Base non practice
         Audience(
@@ -106,6 +173,7 @@ def get_audiences():
             tasks_allowed=[ (3, 2), (7, 2) ]
         ),
     ]
+    """
 
 def get_times():
     return [

@@ -68,6 +68,15 @@ class Schedule:
                 row.audience.id
             ])
         return pd.DataFrame(to_df, columns=columns)
+    
+    def to_excel(self):
+        self.sort()
+        df = self.to_dataframe()
+
+        path = f"RESULT/{ str(datetime.now()) }.xlsx"
+        df.to_excel(path)
+
+        print("Сохранено в " + path)
 
         
 
