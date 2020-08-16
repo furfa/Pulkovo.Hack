@@ -11,8 +11,23 @@ bot = telebot.TeleBot(config.TOKEN)
 
 temp_register = {}
 users = {}
+
+if os.path.exists("users.json"):
+    users = json.loads(
+        open("users.json", "r").read()
+    )
+
 def register(chat_id):
     users[chat_id] = temp_register.get(chat_id)
+
+    with open("users.json", "w") as file:
+        file.write(
+            json.dumps(
+                users,
+                ensure_ascii=False,
+                indent=4
+            )
+        )
 
     return True
 

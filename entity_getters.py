@@ -97,7 +97,7 @@ def get_teachers():
     for k, v in teachers_raw.items():
         al = []
         for p in v["priority"]["lessons"]:
-            al.extend([(t, p[1]) for t in split_task(progs, str(p[0]))[:5]])
+            al.extend([(t, p[1]) for t in split_task(progs, str(p[0]))])
         teacher = Teacher(
             id = k,
             allowed_tasks = al,
@@ -113,7 +113,7 @@ def get_tasks():
     progs = read_programs_json()
     res = []
     for k, v in progs.items():
-        st = split_task(progs, k)[:5]
+        st = split_task(progs, k)
         for i, t in enumerate(st):
             res.append(
                 Task(
@@ -145,15 +145,22 @@ def get_audiences():
     for k, v in auds_raw.items():
         ta = []
         for t in v["allowed"]:
-            if t in v["advantages"]:
-                ta.extend(([(q, 2) for q in split_task(progs, t)]))
-            else:
-                ta.extend(([(q, 1) for q in split_task(progs, t)]))
-        
+            try:
+                if t in v["advantages"]:
+                    ta.extend(([(q, 2) for q in split_task(progs, t)]))
+                else:
+                    ta.extend(([(q, 1) for q in split_task(progs, t)]))
+            except KeyError:
+                for t in v["allowed"]:
+                    tmp = split_task(progs, t)
+                    ta.extend([(q, 1) for q in tmp])
+                
         a = Audience(
             id=k,
             tasks_allowed=ta
         )
+        res.append(a)
+    
     return res
     """ 
     return [
