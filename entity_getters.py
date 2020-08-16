@@ -35,7 +35,8 @@ def read_programs_json():
     f.close()
     return result
 
-def get_teachers(): 
+def get_teachers():
+    
     return [
         Teacher(
             id=0,
@@ -45,7 +46,7 @@ def get_teachers():
         ),
         Teacher(
             id=1,
-            allowed_tasks=[ (0, 4), (1, 4), (2, 4), (3, 4) ],
+            allowed_tasks=[ (0, 1), (1, 5), (2, 3), (3, 4) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
             name="Masha(1st-discipline, all)"
         ),
@@ -57,7 +58,7 @@ def get_teachers():
         ),
         Teacher(
             id=3,
-            allowed_tasks=[ (4, 4), (5, 4), (6, 4), (7, 4) ],
+            allowed_tasks=[ (4, 8), (5, 5), (6, 3), (7, 4) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
             name="Olga(2nd-discipline, all)"
         ),
@@ -71,7 +72,7 @@ def get_teachers():
             id=5,
             allowed_tasks=[ (3, 6), (7, 6) ],
             allowed_times=[ 0, 1, 2, 3, 4 ],
-            name="Practical_Mega_Boss"
+            name="Practical_Mega_Boss(only practice)"
         )
     ]
 
